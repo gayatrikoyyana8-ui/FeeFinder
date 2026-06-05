@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduFees – Find Schools & Colleges Near You</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+<body>
+
+  <!-- LOADING OVERLAY -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading institutions...</p>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <div class="logo-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      EduFees
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#search-section">Search</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span class="user-name-nav" id="navUserName" style="display:none;"></span>
+      <button class="btn-signout" id="btnSignOut" style="display:none;">
+        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+      </button>
+      <button class="btn-signin" id="btnSignIn"
+              onclick="window.location.href='login.html'">
+        Sign In
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-badge">✦ Transparent Education Fees</div>
+    <h1>Find Schools &amp; Colleges<br/>Near You</h1>
+    <p>
+      Search and compare fees across hundreds of institutions
+      in your city. Make informed decisions for your future.
+    </p>
+
+    <!-- Search Box -->
+    <div class="search-box" id="search-section">
+      <div class="search-input-row">
+        <div class="search-icon-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input
+            type="text"
+            id="mainSearchInput"
+            placeholder="Search by school/college name, city, board..."
+            autocomplete="off"
+          />
+        </div>
+        <button class="btn-search" onclick="triggerSearch()">
+          <i class="fa-solid fa-arrow-right"></i> Search
+        </button>
+      </div>
+
+      <!-- Quick Filter Tags -->
+      <div class="quick-tags" id="quickTags">
+        <span class="quick-tag" onclick="quickFilter('CBSE')">CBSE</span>
+        <span class="quick-tag" onclick="quickFilter('ICSE')">ICSE</span>
+        <span class="quick-tag" onclick="quickFilter('State Board')">State Board</span>
+        <span class="quick-tag" onclick="quickFilter('IB')">IB</span>
+        <span class="quick-tag" onclick="quickFilter('Engineering')">Engineering</span>
+        <span class="quick-tag" onclick="quickFilter('Medical')">Medical</span>
+        <span class="quick-tag" onclick="quickFilter('Arts')">Arts</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT — NO FILTER SIDEBAR -->
+  <div class="main-content">
+
+    <!-- RESULTS SECTION — FULL WIDTH -->
+    <section class="results-section">
+
+      <!-- Results Header -->
+      <div class="results-header">
+        <p class="results-count" id="resultsCount">
+          Loading institutions...
+        </p>
+
+        <div class="results-controls">
+          <label for="sortSelect"
+            style="font-family:var(--font);font-size:0.9rem;
+                   color:var(--grey-text);">
+            Sort by:
+          </label>
+          <select class="sort-select" id="sortSelect"
+                  onchange="applySorting()">
+            <option value="relevance">Relevance</option>
+            <option value="fee-low">Fee: Low to High</option>
+            <option value="fee-high">Fee: High to Low</option>
+            <option value="name-az">Name: A to Z</option>
+            <option value="rating">Rating</option>
+          </select>
+
+          <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn"
+                    onclick="setView('grid')" title="Grid View">
+              <i class="fa-solid fa-grip"></i>
+            </button>
+            <button class="view-btn" id="listViewBtn"
+                    onclick="setView('list')" title="List View">
+              <i class="fa-solid fa-list"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Container -->
+      <div class="cards-grid" id="cardsGrid">
+
+        <!-- Skeleton loaders while fetching -->
+        <div class="skeleton-card">
+          <div class="skeleton-top"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line medium"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line long"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+
+        <div class="skeleton-card">
+          <div class="skeleton-top"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line medium"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line long"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+
+        <div class="skeleton-card">
+          <div class="skeleton-top"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-line medium"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line long"></div>
+            <div class="skeleton-line medium"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <p>
+      &copy; 2024 <span>EduFees</span>
+      – Transparent Education Fee Platform. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMsg">Saved!</span>
+  </div>
+
+  <!-- Scripts — ORDER MATTERS -->
+  <script src="firebase-config.js"></script>
+  <script src="index.js"></script>
+
+</body>
+</html>
