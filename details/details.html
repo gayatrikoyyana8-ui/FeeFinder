@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Institution Details – EduFees</title>
+  <!-- PAGE TITLE TAG -->
+<title>Institution Details – FeesFinder</title>
   <link rel="stylesheet" href="style.css"/>
   <link
     rel="stylesheet"
@@ -15,137 +16,121 @@
 </head>
 <body>
 
-  <!-- Loading Overlay -->
+  <!-- ═══════════════════════════════════════
+       LOADING OVERLAY
+  ═══════════════════════════════════════ -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
     <p class="loading-text">Loading institution profile...</p>
   </div>
 
-  <!-- NAVBAR -->
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
   <nav class="navbar">
-    <div class="nav-logo">
-      <div class="logo-icon">
+
+    <!-- LOGO — Upper Left Corner -->
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon-box">
         <i class="fa-solid fa-graduation-cap"></i>
       </div>
-      EduFees
-    </div>
+      <span class="logo-text">
+        <span class="logo-fee">Fees</span><span
+        class="logo-finder">Finder</span>
+      </span>
+    </a>
 
+    <!-- Nav Links -->
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="index.html#search-section">Search</a></li>
+      <li><a href="bookmark.html">My Saved</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
 
+    <!-- Nav Right -->
     <div class="nav-right">
-      <span class="user-name-nav" id="navUserName" style="display:none;"></span>
-      <button class="btn-signout" id="btnSignOut" style="display:none;">Sign Out</button>
-      <button class="btn-signin" id="btnSignIn" onclick="window.location.href='login.html'">
+      <span class="user-name-nav"
+            id="navUserName"
+            style="display:none;"></span>
+      <button
+        class="btn-signout"
+        id="btnSignOut"
+        style="display:none;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Sign Out
+      </button>
+      <button
+        class="btn-signin"
+        id="btnSignIn"
+        onclick="window.location.href='login.html'">
         Sign In
       </button>
     </div>
   </nav>
 
-  <!-- DETAILS PAGE CONTENT -->
+  <!-- ═══════════════════════════════════════
+       DETAILS PAGE CONTENT
+  ═══════════════════════════════════════ -->
   <div class="details-page" id="detailsPage">
 
     <!-- Back Button -->
     <button class="back-btn" onclick="window.history.back()">
-      <i class="fa-solid fa-arrow-left"></i> Back to Search
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to Search
     </button>
 
     <!-- All sections injected by details.js -->
     <div id="detailsContent">
-      <!-- Content loads here -->
+      <!-- Content loads here dynamically -->
     </div>
 
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2024 <span>EduFees</span> – Transparent Education Fee Platform.</p>
-  </footer>
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
 
-  <!-- Toast -->
-  <div class="toast" id="toast">
-    <i class="fa-solid fa-circle-check"></i>
-    <span id="toastMsg"></span>
+      <!-- Footer Logo -->
+      <!-- FOOTER LOGO -->
+<a href="index.html" class="footer-logo-wrap">
+  <div class="logo-icon-box logo-icon-sm">
+    <i class="fa-solid fa-graduation-cap"></i>
   </div>
+  <span class="logo-text">
+    <span class="logo-fee">Fees</span><span
+    class="logo-finder-footer">Finder</span>
+  </span>
+</a>
+      <!-- FOOTER COPYRIGHT TEXT -->
+<p class="footer-text">
+  &copy; 2024 FeesFinder – Transparent Education
+  Fee Platform. All rights reserved.
+</p>
 
-  <script src="firebase-config.js"></script>
-  <script src="details.js"></script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Institution Details – EduFees</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-</head>
-<body>
-
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-    <p class="loading-text">Loading institution profile...</p>
-  </div>
-
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">
-      <div class="logo-icon">
-        <i class="fa-solid fa-graduation-cap"></i>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <span>|</span>
+        <a href="index.html#search-section">Search</a>
+        <span>|</span>
+        <a href="bookmark.html">My Saved</a>
       </div>
-      EduFees
+
     </div>
-
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#search-section">Search</a></li>
-    </ul>
-
-    <div class="nav-right">
-      <span class="user-name-nav" id="navUserName" style="display:none;"></span>
-      <button class="btn-signout" id="btnSignOut" style="display:none;">Sign Out</button>
-      <button class="btn-signin" id="btnSignIn" onclick="window.location.href='login.html'">
-        Sign In
-      </button>
-    </div>
-  </nav>
-
-  <!-- DETAILS PAGE CONTENT -->
-  <div class="details-page" id="detailsPage">
-
-    <!-- Back Button -->
-    <button class="back-btn" onclick="window.history.back()">
-      <i class="fa-solid fa-arrow-left"></i> Back to Search
-    </button>
-
-    <!-- All sections injected by details.js -->
-    <div id="detailsContent">
-      <!-- Content loads here -->
-    </div>
-
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2024 <span>EduFees</span> – Transparent Education Fee Platform.</p>
   </footer>
 
-  <!-- Toast -->
+  <!-- ═══════════════════════════════════════
+       TOAST NOTIFICATION
+  ═══════════════════════════════════════ -->
   <div class="toast" id="toast">
-    <i class="fa-solid fa-circle-check"></i>
+    <i class="fa-solid fa-circle-check"
+       id="toastIcon"></i>
     <span id="toastMsg"></span>
   </div>
 
+  <!-- SCRIPTS — ORDER MATTERS -->
   <script src="firebase-config.js"></script>
   <script src="details.js"></script>
 
